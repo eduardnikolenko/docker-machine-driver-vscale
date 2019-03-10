@@ -17,13 +17,13 @@ Use go get github.com/eduardnikolenko/docker-machine-driver-vscale and make sure
 
 ## Options
 
-| Parameter                   | Env                   | Default |
-| --------------------------- | --------------------- | ------- |
-| **`--vscale-access-token`** | `VSCALE_ACCESS_TOKEN` | -       |
-| **`--vscale-location`**     | `VSCALE_LOCATION`     | `spb0`  |
-| **`--vscale-made-from`**    | `VSCALE_MADE_FROM`    |         |
-| **`--vscale-rplan`**        | `VSCALE_RPLAN`        | `small` |
-| **`--vscale-swap-file`**    | `VSCALE_SWAP_FILE`    | `0`     |
+| Parameter                   | Env                   | Default                      |
+| --------------------------- | --------------------- | ---------------------------- |
+| **`--vscale-access-token`** | `VSCALE_ACCESS_TOKEN` | -                            |
+| **`--vscale-location`**     | `VSCALE_LOCATION`     | `spb0`                       |
+| **`--vscale-made-from`**    | `VSCALE_MADE_FROM`    | `ubuntu_16.04_64_001_docker` |
+| **`--vscale-rplan`**        | `VSCALE_RPLAN`        | `small`                      |
+| **`--vscale-swap-file`**    | `VSCALE_SWAP_FILE`    | `0`                          |
 
 ## License
 

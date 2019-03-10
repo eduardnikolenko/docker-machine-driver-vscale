@@ -1,10 +1,12 @@
 package main
 
-import (
-	"github.com/docker/machine/libmachine/drivers/plugin"
-	"github.com/eduardnikolenko/docker-machine-driver-vscale/driver"
+import "github.com/docker/machine/libmachine/drivers/plugin"
+
+var (
+	// Version ...
+	Version string
 )
 
 func main() {
-	plugin.RegisterDriver(driver.NewDriver("", ""))
+	plugin.RegisterDriver(NewDriver("", ""))
 }
