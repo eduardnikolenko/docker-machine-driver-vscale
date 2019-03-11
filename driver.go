@@ -52,26 +52,28 @@ func (d *Driver) getClient() *api.WebClient {
 	return api.NewClient(d.AccessToken)
 }
 
-func (d *Driver) createSSHKey() (*api.SSHKey, error) {
+func (d *Driver) createSSHKey() error {
 	// Generate new SSH Key pair
 	err := ssh.GenerateSSHKey(d.GetSSHKeyPath())
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	// Read public SSH Key
 	publicKey, err := ioutil.ReadFile(d.GetSSHKeyPath() + ".pub")
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	// Upload public SSH Key to Vscale
 	key, _, err := d.getClient().SSHKey.Create(string(publicKey), d.MachineName)
 
-	return key, err
+	d.SSHKeyID = key.ID
+
+	return err
 }
 
-func (d *Driver) createScalet() (*api.Scalet, error) {
+func (d *Driver) createScalet() error {
 	client := d.getClient()
 
 	scalet, _, err := client.Scalet.CreateWithoutPassword(
@@ -83,11 +85,16 @@ func (d *Driver) createScalet() (*api.Scalet, error) {
 		[]int64{d.SSHKeyID},
 		true,
 	)
+	if err != nil {
+		return err
+	}
+
+	d.ScaletID = scalet.CTID
 
 	for {
 		scalet, _, err := client.Scalet.Get(d.ScaletID)
 		if err != nil {
-			return scalet, err
+			return err
 		}
 
 		if scalet.Active == true && scalet.PublicAddresses.Address != "" {
@@ -99,7 +106,7 @@ func (d *Driver) createScalet() (*api.Scalet, error) {
 		time.Sleep(1 * time.Second)
 	}
 
-	return scalet, err
+	return nil
 }
 
 func (d *Driver) createSwapFile() error {
@@ -237,22 +244,17 @@ func (d *Driver) PreCreateCheck() error {
 // Create Scalet
 func (d *Driver) Create() error {
 	// Create SSH key
-	sshKey, err := d.createSSHKey()
-	if err != nil {
+	if err := d.createSSHKey(); err != nil {
 		return err
 	}
-	d.SSHKeyID = sshKey.ID
 
 	// Create Scalet
-	scalet, err := d.createScalet()
-	if err != nil {
+	if err := d.createScalet(); err != nil {
 		return err
 	}
-	d.ScaletID = scalet.CTID
 
 	// Create Swap for Scalet
-	err = d.createSwapFile()
-	if err != nil {
+	if err := d.createSwapFile(); err != nil {
 		return err
 	}
 
