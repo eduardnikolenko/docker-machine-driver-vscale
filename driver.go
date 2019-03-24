@@ -254,11 +254,9 @@ func (d *Driver) Create() error {
 	}
 
 	// Create Swap for Scalet
-	if err := d.createSwapFile(); err != nil {
-		return err
-	}
+	err := d.createSwapFile()
 
-	return nil
+	return err
 }
 
 // Start Scalet
