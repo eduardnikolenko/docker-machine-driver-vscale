@@ -2,6 +2,7 @@
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/eduardnikolenko/docker-machine-driver-vscale)](https://goreportcard.com/report/github.com/eduardnikolenko/docker-machine-driver-vscale)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](/LICENSE)
+[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=eduardnikolenko/docker-machine-driver-vscale)](https://dependabot.com)
 
 ## Installation
 
